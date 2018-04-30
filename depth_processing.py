@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 
 
 
+
 def image2cloud(data, K_depth ,ploting = False):
 
     depth = data
