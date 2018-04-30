@@ -17,7 +17,7 @@ def init_map():
 
     _map = np.zeros((num_of_blocks_y, num_of_blocks_x))
     _map[:, :] = -1
-    print("Map initialized with height: " + str(num_of_blocks_y) + " width : " + str(num_of_blocks_x) + "and resolution of " + _resolution + "meters")
+    print("Map initialized with height: " + str(num_of_blocks_y) + " width : " + str(num_of_blocks_x) + "and resolution of " + str(_resolution) + "meters")
     initialized = True
 
 
