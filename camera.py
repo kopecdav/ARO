@@ -17,14 +17,17 @@ def main():
         # get point cloud
         pc = turtle.get_point_cloud()
 
-	if pc is None:
- 	    continue
+	    if pc is None:
+ 	        continue
 
+        print(pc.shape)
         # mask out floor points
         mask = pc[:,:,1] > x_range[0]
 
+
+
         # mask point too far and close
-	mask = np.logical_and(mask, pc[:,:,2] > z_range[0])
+    	mask = np.logical_and(mask, pc[:,:,2] > z_range[0])
         mask = np.logical_and(mask, pc[:,:,2] < z_range[1])
 
         if np.count_nonzero(mask) <= 0:
