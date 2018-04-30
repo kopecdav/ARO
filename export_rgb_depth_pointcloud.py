@@ -15,5 +15,5 @@ while not turtle.is_shutting_down():
     np.save('depth.npy', depth)
     np.save('rgb.npy', rgb)
     np.save('point_cloud.npy', point_cloud)
-    
+
     exit(0)
