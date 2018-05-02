@@ -27,14 +27,14 @@ def main():
         turtle.reset_odometry()
         while move:
 
-            turtle.cmd_velocity(linear=0, angular=90)
+            turtle.cmd_velocity(linear=0, angular=1)
             x,y,a = turtle.get_odometry()
             if a > 3.14:
                 break
-
+            print("Odometry angle : " + str(a))
             sleep(0.1)
 
-
+        turtle.cmd_velocity(linear=0,angular=0)
         # MAP STAGE
 
         # Plan trajectory, where to go next
