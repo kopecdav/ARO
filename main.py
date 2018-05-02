@@ -1,6 +1,8 @@
 from turtlebot import Turtlebot
 from depth_processing import image2cloud
 from occupancy_grid import init_map
+from time import sleep
+
 def main():
 
     turtle = Turtlebot(pc=True,depth=True)
@@ -20,6 +22,17 @@ def main():
 
         # Pointcloud
         pcl = image2cloud(depth, K, True)
+
+        move = True
+        turtle.reset_odometry()
+        while move:
+
+            turtle.cmd_velocity(linear=0, angular=90)
+            x,y,a = turtle.get_odometry()
+            if a > 3.14:
+                break
+
+            sleep(0.1)
 
 
         # MAP STAGE
