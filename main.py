@@ -1,4 +1,4 @@
-from turtlebot import Turtlebot
+from turtlebot import Turtlebot, Rate, get_time
 from depth_processing import image2cloud
 from occupancy_grid import init_map
 from time import sleep
@@ -7,7 +7,7 @@ def main():
 
     turtle = Turtlebot(pc=True,depth=True)
     K = turtle.get_depth_K()
-
+    rate = Rate(10)
     #Init map
     init_map()
 
@@ -25,16 +25,18 @@ def main():
 
         move = True
         turtle.reset_odometry()
-        while move:
 
-            turtle.cmd_velocity(linear=0, angular=1)
-            x,y,a = turtle.get_odometry()
-            if a > 3.14:
-                break
-            print("Odometry angle : " + str(a))
-            sleep(0.1)
+
+        turtle.cmd_velocity(linear=0, angular=1)
+
+        t = get_time()
+        while get_time() - t < 10:
+            x, y, a = turtle.get_odometry()
+            print("Odometry angle : " + a)
+            rate.sleep()
 
         turtle.cmd_velocity(linear=0,angular=0)
+
         # MAP STAGE
 
         # Plan trajectory, where to go next
