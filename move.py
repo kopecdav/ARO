@@ -26,14 +26,14 @@ def rotate(turtle = None, angle=0,speed = 1, verbose = False):
     t = get_time()
     while abs(moved_angle) < abs(angle + off - corection):
 
-	    print("moved_angle: " + str(moved_angle))
-	    [x,y,a] = turtle.get_odometry()
-	    print("odometry: " + str(a))
-	    moved_angle= moved_angle + a
-	    turtle.reset_odometry()
-	    turtle.cmd_velocity(linear=0, angular=speed)
+	print("moved_angle: " + str(moved_angle))
+	[x,y,a] = turtle.get_odometry()
+	print("odometry: " + str(a))
+	moved_angle= moved_angle + a
+	turtle.reset_odometry()
+	turtle.cmd_velocity(linear=0, angular=speed)
         print("Angle : " + str(moved_angle))
-	    rate.sleep()
+	rate.sleep()
 
     turtle.cmd_velocity(linear=0,angular=0)
     if verbose:
