@@ -1,6 +1,7 @@
 from turtlebot import Turtlebot, Rate, get_time
 from depth_processing import image2cloud
 from occupancy_grid import init_map
+from ICP import fit_pointcloud
 import move
 
 from time import sleep
@@ -24,6 +25,8 @@ def main():
 
         # Pointcloud
         pcl = image2cloud(depth, K, True)
+        fit_pointcloud(pcl)
+
 
         move = True
         turtle.reset_odometry()
