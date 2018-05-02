@@ -1,3 +1,18 @@
+import numpy as np
+import scipy.spatial as spatial
+import random as rd
+import matplotlib.pyplot as plt
+
+# Variables
+_fig = plt.figure(frameon=True)
+_ax = _fig.gca()
+_previous = 0
+_R = np.identity(2)
+_T = np.zeros((2, 1))
+_init_position = np.array([[0], [0]])
+_positions = np.zeros((2, 1000))
+_position_index = 1
+
 def odom_abs_to_rel(origin_rot, origin_pos, rot, pos):
     return origin_rot.T @ rot, origin_rot.T @ (
                 pos - origin_pos)  # @ is matrix multiplication operator since Python 3.5. If you have lower Python, use np.matmul(a, b)
@@ -124,3 +139,45 @@ def icp(pointcloud, new_pts, init_rot=None, init_trans=None, max_tolerance=0.001
     # print(Tres)
 
     return Rres, Tres, Rrel, Trel
+
+
+def init():
+    global _ax
+    global _init_position
+    global _positions
+    _ax.axis('equal')
+    _ax.invert_xaxis()
+    _ax.scatter(_init_position[1], _init_position[0], c='r', s=1)
+    _positions[:, 0] = (_init_position + _T)[:, 0]
+
+
+def fit_pointcloud(new):
+    global _previous
+    global _R
+    global _T
+    global _init_position
+    global _positions
+    global _position_index
+
+    if _previous == 0:
+        init()
+        _previous = new
+        return
+    else:
+        Rres, Tres, Rrel, Trel = icp(_previous, new, init_rot=_R, init_trans=_T)
+        _R = Rres
+        _T = Tres
+
+        backstep = np.add(new, _T)
+        backstep = _R.dot(backstep)
+        np.hstack((_previous, backstep))
+        ps = (np.add(_init_position, _T))
+        _positions[:, _position_index] = _R.dot(ps)[:, 0]
+
+        _ax.scatter(backstep[1, :], backstep[0, :], s=1)
+        _ax.scatter(_positions[1, _position_index], _positions[0, _position_index], s=1)
+
+        _position_index = _position_index + 1
+
+        plt.show()
+        return
