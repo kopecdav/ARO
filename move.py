@@ -1,5 +1,5 @@
 from turtlebot import Turtlebot,Rate, get_time
-
+import math
 
 
 def rotate(turtle = None, angle=0,speed = 1, verbose = False):
@@ -43,7 +43,7 @@ def translate(turtle = None, linear=2, speed = 1, verbose = False):
     corection = 0
     rate = Rate(10)
 
-    movement_time = abs(angle) / speed
+    movement_time = abs(linear) / speed
     moved_angle = 0
 
     turtle.cmd_velocity(linear=0, angular=0)
@@ -63,7 +63,16 @@ def translate(turtle = None, linear=2, speed = 1, verbose = False):
 
     while abs(moved_distance) < abs(linear + off - corection):
 
-        print("Something gonna happen here soon")
+        [x,y,a] = turtle.get_odometry()
+        moved_distance = moved_distance + math.sqrt(math.pow(x,2) + math.pow(y,2))
+        turtle.reset_odometry()
+        turtle.cmd_velocity(linear=0, angular=speed)
+
+        if verbose:
+            print("moved_distance: " + str(moved_distance))
+
+        rate.sleep()
+
 
 
 

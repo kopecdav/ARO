@@ -32,7 +32,12 @@ def main():
         turtle.reset_odometry()
 
         move.rotate(turtle, 3.14, verbose = True)
+
+        move.translate(turtle,2, verbose = True)
+
         print("Back in main")
+
+
         break
         # MAP STAGE
 
