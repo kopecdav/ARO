@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # Variables
 _fig = plt.figure(frameon=True)
 _ax = _fig.gca()
-_previous = 0
+_previous = None
 _R = np.identity(2)
 _T = np.zeros((2, 1))
 _init_position = np.array([[0], [0]])
@@ -151,7 +151,7 @@ def fit_pointcloud(new):
     global _positions
     global _position_index
 
-    if _previous == 0:
+    if _previous is None:
         init()
         _previous = new
         return
