@@ -45,6 +45,9 @@ def image2cloud(data, K_depth ,ploting = False):
         ax.scatter([0], [0], c='r')
         plt.show(block=False)
 
+    # 3D pointCloud to 2D pointcloud
+    pointcloud = np.delete(pointcloud, obj=2, axis=0)
+
     return pointcloud
 
 
