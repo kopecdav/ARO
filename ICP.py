@@ -13,14 +13,6 @@ _init_position = np.array([[0], [0]])
 _positions = np.zeros((2, 1000))
 _position_index = 1
 
-def odom_abs_to_rel(origin_rot, origin_pos, rot, pos):
-    return origin_rot.T @ rot, origin_rot.T @ (
-                pos - origin_pos)  # @ is matrix multiplication operator since Python 3.5. If you have lower Python, use np.matmul(a, b)
-
-
-def odom_rel_to_abs(origin_rot, origin_pos, rel_rot, rel_pos):
-    return origin_rot @ rel_rot, origin_rot @ rel_pos + origin_pos
-
 
 def reject(p, q):
     """
